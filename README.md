@@ -3,7 +3,7 @@
 **QuickPy** is a powerful and lightweight Visual Studio Code extension that allows you to execute Python code directly in the editor and see the results inline. Boost your productivity and streamline your coding workflow with real-time feedback and error handling.
 
 <p align="center">
-    <img src="https://github.com/Codegyan-LLC/QuickPy/blob/main/images/use.gif" width="600" alt="QuickPy Use">
+    <img src="https://raw.githubusercontent.com/Codegyan-LLC/QuickPy/refs/heads/main/images/use.gif" width="600" alt="QuickPy Use">
 </p>
 
 ## Getting Started
