@@ -2,7 +2,7 @@
   "name": "quickpy",
   "displayName": "QuickPy",
   "description": "Execute inline Python code directly in VS Code.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "codegyan",
   "author": "Prathmesh Yelne",
   "engines": {
