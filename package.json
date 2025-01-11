@@ -1,0 +1,76 @@
+{
+  "name": "quickpy",
+  "displayName": "QuickPy",
+  "description": "Execute inline Python code directly in VS Code.",
+  "version": "0.0.1",
+  "publisher": "codegyan",
+  "author": "Prathmesh Yelne",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "icon": "images/icon.png",
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "QuickPy",
+    "QuickPy Extension",
+    "vs extension",
+    "Fast Extension",
+    "coding",
+    "Codegyan",
+    "Prathmesh Yelne"
+  ],
+  "activationEvents": [
+    "onLanguage:python"
+  ],
+  "main": "./dist/src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "quickpy.helloWorld",
+        "title": "Hello World"
+      }
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/Codegyan-LLC/QuickPy/issues"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/prathmeshyelne"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Codegyan-LLC/QuickPy.git"
+  },
+  "homepage": "https://github.com/Codegyan-LLC/QuickPy/blob/master/README.md",
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/mocha": "^10.0.9",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.96.0",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.13.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.3",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2"
+  }
+}
