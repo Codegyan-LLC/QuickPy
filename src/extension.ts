@@ -142,6 +142,7 @@ function runSelectedBlock(editor: vscode.TextEditor) {
     });
 }
 
+
 function displayInlineOutput(
     output: string,
     editor: vscode.TextEditor,
@@ -153,20 +154,51 @@ function displayInlineOutput(
         return;
     }
 
-	// Clear any existing decorations before applying new ones
-	clearOutput(editor);
+    // Clear any existing decorations before applying new ones
+    clearOutput(editor);
 
     const currentLineText = editor.document.lineAt(currentLine).text;
+    const currentFilePath = editor.document.fileName; // Get the current file path
     const color = isError
         ? 'red'
         : vscode.workspace.getConfiguration('pythonLiveExecution').get<string>('inlineColor') || defaultConfig.inlineColor;
 
+    // Parse error details if it's an error
+    let formattedOutput = output.trim();
+    let errorLine = currentLine + 1; // Default to the current line
+    let caretPosition = -1; // Default to no caret position
+
+    if (isError) {
+        // Check for common error patterns
+        const errorMatch = output.match(/File ".*?", line (\d+)/);
+        if (errorMatch && errorMatch[1]) {
+            errorLine = parseInt(errorMatch[1], 10);
+        }
+
+        const caretMatch = output.match(/\n( *\^)/); // Find the caret position
+        if (caretMatch && caretMatch[1]) {
+            caretPosition = caretMatch[1].length - 1; // Calculate caret offset
+        }
+
+        // Format the output with file path, line number, and caret
+        formattedOutput = `Error in file: ${currentFilePath} at line ${errorLine}\n${output.trim()}`;
+        if (caretPosition >= 0) {
+            formattedOutput += `\n${' '.repeat(caretPosition)}^ (Execution Time: ${executionTime}s)`;
+        }
+    } else {
+        // For non-error outputs
+        formattedOutput = `${output.trim()} (Execution Time: ${executionTime}s)`;
+    }
+
+    // Highlight the appropriate line and append inline content
+    const targetLine = Math.min(errorLine - 1, editor.document.lineCount - 1); // Ensure within range
+    const targetLineText = editor.document.lineAt(targetLine).text;
     const decorations: vscode.DecorationOptions[] = [
         {
-            range: new vscode.Range(currentLine, currentLineText.length, currentLine, currentLineText.length),
+            range: new vscode.Range(targetLine, targetLineText.length, targetLine, targetLineText.length),
             renderOptions: {
                 after: {
-                    contentText: ` # ${output.trim()} (Execution Time: ${executionTime}s)`,
+                    contentText: ` # ${formattedOutput}`,
                     color,
                 },
             },
@@ -181,7 +213,6 @@ function displayInlineOutput(
     currentDecorationType = vscode.window.createTextEditorDecorationType({});
     editor.setDecorations(currentDecorationType, decorations);
 }
-
 
 
 function deactivate() {

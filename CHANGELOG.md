@@ -11,3 +11,7 @@ Initial release.
 ## v0.0.2 (2025-01-12)
 
 Fix Minor Issue
+
+## v0.0.3 (2025-01-12)
+
+Displaying the current file path on error instead of temporary files path 
